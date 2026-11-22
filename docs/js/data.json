@@ -120,6 +120,75 @@
     "reweighted_avg": 125.0,
     "drift_shift_note": "continuous: drift r -> r + sigma^2 under stock measure"
   },
+  "ch8": {
+    "B0": 95.2467,
+    "rates": [
+      0.04,
+      0.06
+    ],
+    "bank_probs": [
+      0.5,
+      0.5
+    ],
+    "fwd_probs": [
+      0.5048,
+      0.4952
+    ],
+    "fwd_rate": 0.049905,
+    "avg_rate_under_fwd": 0.049905
+  },
+  "practice": [
+    {
+      "id": 1,
+      "text": "Stock 100 → 120 or 70, r=0. Find risk-neutral q.",
+      "answer": 0.6
+    },
+    {
+      "id": 2,
+      "text": "Stock 100 → 150/50, bank q=0.5. Stock-numeraire up-prob?",
+      "answer": 0.75
+    },
+    {
+      "id": 3,
+      "text": "Call payoff 30/0 on Stock B (q=0.4). Bank-numeraire price?",
+      "answer": 12.0
+    },
+    {
+      "id": 4,
+      "text": "Same call under stock numeraire (must match).",
+      "answer": 12.0
+    },
+    {
+      "id": 5,
+      "text": "ATM call S=K=100, r=0, σ=0.2, T=1. Black-Scholes price.",
+      "answer": 7.9656
+    },
+    {
+      "id": 6,
+      "text": "N(d2) for that ATM call.",
+      "answer": 0.4602
+    },
+    {
+      "id": 7,
+      "text": "Three-state reweight avg under stock measure.",
+      "answer": 112.5
+    },
+    {
+      "id": 8,
+      "text": "Forward rate from Ch.8 bond (100/B0 - 1).",
+      "answer": 0.049905
+    },
+    {
+      "id": 9,
+      "text": "Stock B reweight to stock: up prob.",
+      "answer": 0.52
+    },
+    {
+      "id": 10,
+      "text": "Laptop FX rate 60000/720.",
+      "answer": 83.33
+    }
+  ],
   "widgets": {
     "reweight": {
       "S0": 100,

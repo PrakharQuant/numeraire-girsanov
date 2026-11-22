@@ -119,7 +119,49 @@ function initBell(w) {
   draw();
 }
 
+// progress bar
+window.addEventListener("scroll", () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+  const fill = document.getElementById("progressFill");
+  if (fill) fill.style.width = p + "%";
+});
+
+// practice questions
+function renderPractice(d) {
+  const el = document.getElementById("practiceList");
+  if (!el || !d.practice) return;
+  el.innerHTML = d.practice.map(q => `
+    <div class="qa">
+      <div class="q">${q.id}. ${q.text}</div>
+      <details><summary>Show step-by-step</summary>
+        <p>Answer: <b>${q.answer}</b> (computed in verify.py)</p>
+      </details>
+    </div>`).join("");
+}
+
+// ---------- Widget 3: price-invariance calculator ----------
+function initInvariance() {
+  const up = document.getElementById("invUp"), dn = document.getElementById("invDn"), K = document.getElementById("invK");
+  if (!up) return;
+  function draw() {
+    const U = +up.value || 150, D = +dn.value || 50, k = +K.value || 100, S0 = 100;
+    const q = Math.max(0.001, Math.min(0.999, (S0 - D) / (U - D)));
+    const pu = q * U / S0, pd = (1 - q) * D / S0;
+    const payU = Math.max(U - k, 0), payD = Math.max(D - k, 0);
+    const bank = q * payU + (1 - q) * payD;
+    const stock = (payU / U) * pu * S0 + (payD / D) * pd * S0;
+    document.getElementById("invBank").textContent = fmt(bank);
+    document.getElementById("invStock").textContent = fmt(stock);
+    document.getElementById("invMatch").textContent = Math.abs(bank - stock) < 1e-8 ? "✔ match" : "mismatch";
+  }
+  [up, dn, K].forEach(el => el && el.addEventListener("input", draw));
+  draw();
+}
+
 function initWidgets(d) {
   try { initRewidget(d.widgets.reweight); } catch (e) { console.error(e); }
   try { initBell(d.widgets.bell); } catch (e) { console.error(e); }
+  try { initInvariance(); } catch (e) { console.error(e); }
+  try { renderPractice(d); } catch (e) { console.error(e); }
 }

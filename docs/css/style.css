@@ -102,4 +102,9 @@ footer.site {
   text-align: center; color: var(--muted); font-size: .9rem;
 }
 footer .credit { margin-top: .5rem; }
+.progress-bar { position: sticky; top: 42px; height: 4px; background: var(--border); z-index: 19; }
+.progress-fill { height: 100%; background: var(--accent); width: 0; transition: width .1s; }
+.next-ch { display: inline-block; margin: 1.2rem 0; padding: .5rem 1rem; background: var(--accent); color: white; border-radius: 8px; text-decoration: none; font-weight: 700; }
+.next-ch:hover { opacity: .9; }
+#practiceList .qa { margin-bottom: .8rem; }
 @media (max-width: 560px) { body { font-size: 15px; } main { padding-inline: .7rem; } }

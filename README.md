@@ -5,7 +5,7 @@ quant finance **through tiny hand-checkable numbers first, plain words second,
 formulas last**. No measure theory assumed. Written for a BMS student aiming at
 a quant career (and honestly, for anyone who fell asleep through change-of-numeraire lectures).
 
-**Live site:** https://prakharquant.github.io/numeraire-girsanov/ *(placeholder until Pages is enabled)*
+**Live site:** https://prakharquant.github.io/numeraire-girsanov/
 
 ## What's inside
 
@@ -19,7 +19,8 @@ a quant career (and honestly, for anyone who fell asleep through change-of-numer
 | 5 | Price invariance | same call = 12 in rupees and in shares |
 | 6 | N(d₂) as area, N(d₁) under the share ruler | d₂ = −0.1, d₁ = 0.1, C ≈ 7.96 |
 | 7 | Girsanov | discrete reweighting → drift r → r + σ² |
-| 8 | Forward measure (stub) | zero-coupon-bond numeraire preview |
+| 8 | Forward measure | zero-coupon bond reweighting; forward rate = average |
+| 9 | Cheat sheet | numeraires table + 4 big ideas |
 
 Two vanilla-JS widgets: a **scenario reweighting slider** (Ch.4/5) and a
 **bell-curve visualiser** with S/K/r/σ/T sliders showing the N(d₂) shaded area,
@@ -60,7 +61,7 @@ in the prose without re-running the script, CI-style checks will fail loudly.
 ```
  Ch.0 units ─▶ Ch.1 fake chances ─▶ Ch.2 trees→BS ─▶ Ch.3 option legs
                                                         │
- Ch.8 forward measure ◀─ Ch.7 Girsanov ◀─ Ch.6 bell slide ◀─ Ch.4/5 ruler swap
+ Ch.8 forward measure ◄─ Ch.7 Girsanov ◄─ Ch.6 bell slide ◄─ Ch.4/5 ruler swap
 ```
 
 Order matters: each chapter only uses vocabulary the previous ones defined.

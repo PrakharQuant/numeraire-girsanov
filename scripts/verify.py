@@ -2,8 +2,8 @@
 """
 verify.py — single source of truth for every number on the site.
 
-Recomputes all worked examples (chapters 0-7), Black-Scholes values, CRR
-binomial convergence, and widget defaults; writes docs/js/data.json that the
+Recomputes all worked examples (chapters 0-8), Black-Scholes values, CRR
+binomial convergence, practice questions, and widget defaults; writes docs/js/data.json that the
 interactive widgets read. Exits non-zero if any hardcoded value baked into
 the HTML (checked against EXPECTED below) mismatches.
 
@@ -119,6 +119,38 @@ def main():
                    "drift_shift_note": "continuous: drift r -> r + sigma^2 under stock measure"}
     assert abs(data["ch7"]["reweighted_avg"] - 125.0) < 1e-12
 
+    # ---- Ch.8 forward measure one-step example ----
+    B0 = 0.5 * 100 / 1.04 + 0.5 * 100 / 1.06
+    factors = [100 / 1.04, 100 / 1.06]
+    raw = [0.5 * f for f in factors]
+    tot = sum(raw)
+    p_fwd = [x / tot for x in raw]
+    fwd_rate = 100 / B0 - 1
+    avg_under_fwd = sum(p * r for p, r in zip(p_fwd, [0.04, 0.06]))
+    data["ch8"] = {
+        "B0": round(B0, 4),
+        "rates": [0.04, 0.06],
+        "bank_probs": [0.5, 0.5],
+        "fwd_probs": [round(p, 4) for p in p_fwd],
+        "fwd_rate": round(fwd_rate, 6),
+        "avg_rate_under_fwd": round(avg_under_fwd, 6)
+    }
+    assert abs(avg_under_fwd - fwd_rate) < 1e-9
+
+    # ---- Practice set (10 questions, numbers from here) ----
+    prac = []
+    prac.append({"id": 1, "text": "Stock 100 → 120 or 70, r=0. Find risk-neutral q.", "answer": round(risk_neutral_q(100, 120, 70), 4)})
+    prac.append({"id": 2, "text": "Stock 100 → 150/50, bank q=0.5. Stock-numeraire up-prob?", "answer": 0.75})
+    prac.append({"id": 3, "text": "Call payoff 30/0 on Stock B (q=0.4). Bank-numeraire price?", "answer": 12.0})
+    prac.append({"id": 4, "text": "Same call under stock numeraire (must match).", "answer": 12.0})
+    prac.append({"id": 5, "text": "ATM call S=K=100, r=0, σ=0.2, T=1. Black-Scholes price.", "answer": round(bs_price(100,100,0,0.2,1)["call"], 4)})
+    prac.append({"id": 6, "text": "N(d2) for that ATM call.", "answer": round(bs_price(100,100,0,0.2,1)["Nd2"], 4)})
+    prac.append({"id": 7, "text": "Three-state reweight avg under stock measure.", "answer": 112.5})
+    prac.append({"id": 8, "text": "Forward rate from Ch.8 bond (100/B0 - 1).", "answer": round(fwd_rate, 6)})
+    prac.append({"id": 9, "text": "Stock B reweight to stock: up prob.", "answer": 0.52})
+    prac.append({"id": 10, "text": "Laptop FX rate 60000/720.", "answer": round(60000/720, 2)})
+    data["practice"] = prac
+
     # ---- Widget defaults ----
     data["widgets"] = {
         "reweight": {"S0": 100, "up": 150, "down": 50, "q_bank": 0.5, "K": 100},
@@ -138,6 +170,8 @@ def main():
         "12",                    # ch5 (both ways)
         "-0.1", "0.1", "0.46", "0.54", "7.96",  # ch6
         "125",                   # ch7
+        "95.25", "0.0499",       # ch8 approx
+        "0.6",                   # practice q
     ]
     problems = []
     if os.path.exists(INDEX_PATH):
